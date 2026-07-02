@@ -1,4 +1,4 @@
-const BASE_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8000/api";
+const BASE_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8001/api";
 
 async function request(path, options = {}) {
   const res = await fetch(`${BASE_URL}${path}`, {
@@ -21,4 +21,10 @@ export const api = {
   listReviews: () => request("/reviews/"),
 
   listPRs: (owner, repo) => request(`/repos/${owner}/${repo}/pulls`),
+
+  analyzeDiff: (diff) =>
+    request("/review/diff", {
+      method: "POST",
+      body: JSON.stringify({ diff }),
+    }),
 };
